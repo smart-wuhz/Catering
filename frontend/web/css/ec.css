@@ -1,0 +1,105 @@
+/*图标样式集合*/
+
+/*房租报告走势图*/
+#fz_ec{
+    background-color: rgba(0,0,0,0.5)!important;
+    margin: 0 3vw!important;
+    width: 94vw!important;
+    margin-top: .1rem!important;
+    height: 2rem;
+    padding-top: .1rem;
+    margin-bottom: .1rem!important;
+}
+
+/*潜力报告圆柱图*/
+#ql_ec{
+    background-color: rgba(0,0,0,0.5)!important;
+    margin: 0 3vw!important;
+    width: 94vw!important;
+    margin-top: .1rem!important;
+    height: 2rem;
+    padding-top: .1rem;
+    margin-bottom: .1rem!important;
+}
+
+/*评论报告饼图*/
+/*.pl_box{*/
+    /*width: 94vw;*/
+    /*margin: 0 3vw;*/
+/*}*/
+/*.plb_right{*/
+    /*float: right;*/
+    /*font-size: .12rem;*/
+    /*color: #ffffff;*/
+    /*background-color: rgba(0,0,0,0.5);*/
+    /*text-align: center;*/
+/*}*/
+/*.plb_right table{*/
+    /*border-color: #4f5661;*/
+/*}*/
+/*.plb_right span{*/
+    /*display: block;*/
+/*}*/
+/*.plb_right thead th{*/
+    /*padding: .05rem 0;*/
+    /*background-color: #425b97;*/
+    /*border: none;*/
+/*}*/
+/*.plb_right thead th:first-child{*/
+    /*width: .53rem;*/
+    /*border-right: 1px solid #5169a4;*/
+/*}*/
+/*.plb_right thead th:nth-child(2){*/
+    /*width: .825rem;*/
+    /*border-right: 1px solid #5169a4;*/
+/*}*/
+/*.plb_right thead th:last-child{*/
+    /*width: .53rem;*/
+/*}*/
+/*.plb_left{*/
+    /*float: left;*/
+/*}*/
+
+#pl_ec{
+    background-color: rgba(0,0,0,0.5)!important;
+    margin: 0 3vw!important;
+    width: 94vw!important;
+    margin-top: .1rem!important;
+    height: 2rem;
+    padding-top: .1rem;
+    margin-bottom: .1rem!important;
+}
+
+/*报告二营业区域*/
+#yy_ec{
+    width: 100%;
+    height: 1.7rem;
+    padding-top: .1rem;
+}
+/*就餐人数*/
+#jc_ec{
+    width: 100%;
+    height: 2rem;
+    padding-top: .1rem;
+}
+/*本店翻台率*/
+#ft_ec{
+    width: 100%;
+    height: 1.7rem;
+    padding-top: .1rem;
+}
+
+/*房租合理性*/
+#hl_ec{
+    width: 100%;
+    height: 2.4rem;
+    padding-top: .1rem;
+    z-index: 1;
+}
+
+/*报告二评分详情*/
+#pf_ec{
+    width: 100%;
+    height: 2rem;
+    padding-top: .1rem;
+}
