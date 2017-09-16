@@ -4,6 +4,7 @@ namespace frontend\models;
 use Yii;
 use yii\base\Model;
 use frontend\models\User;
+use common\helps\Sms;
 
 /**
  * Password reset request form
@@ -58,5 +59,7 @@ class PasswordResetRequestForm extends Model
         /*
          *  Todo 发送验证码
          * */
+        $sms=new Sms(['mobile'=>$this->mobile,'usage'=>self::VERCODE_USAGE]);
+        return $sms->send();
     }
 }

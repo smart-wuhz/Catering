@@ -3,31 +3,16 @@
 namespace frontend\controllers;
 
 use Yii;
-use common\models\SmsLog;
-use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\models\SmsLog;
+use common\helps\Sms;
 
 /**
  * SmsController implements the CRUD actions for SmsLog model.
  */
 class SmsController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Creates a new SmsLog model.
@@ -36,27 +21,23 @@ class SmsController extends Controller
      */
     public function actionCreate()
     {
-        $model = new SmsLog();
         if(Yii::$app->request->isAjax) {
-            if ( $model->validate(Yii::$app->request->get())) {
-                $model->mobile = Yii::$app->request->get('mobile');
-                //$model->code=$this->generate_code();
-                $model->code = '888888';
-                //$model->usage = 'userRegister';
-                $model->usage=Yii::$app->request->get('usage');
-                $model->create_time = time();
+            if ( $model->validate(Yii::$app->request->post())) {
+                
+                $smsArray=[
+                    'mobile' => Yii::$app->request->post('mobile'),
+                    //'usage' => 'userRegister'
+                    'usage'=>Yii::$app->request->post('usage'),
+                ];
+                $sms =new Sms($smsArray);
 
-                if ($model->save()) {
-                    return json_encode(['status' => 0, 'msg' => 'success']);
-                } else {
-                    return json_encode(['status' => 1, 'msg' => 'error']);
-                }
+                $result =$sms->send() ? ['status' => 0, 'msg' => 'success'] : ['status' => 1, 'msg' => 'error'];
+                return json_encode($result);
             } else {
                 return json_encode(['status' => 1, 'msg' => $model->errors]);
             }
         }
     }
-
 
     /**
      * Finds the SmsLog model based on its primary key value.
