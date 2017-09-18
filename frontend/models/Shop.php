@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\models;
 
 use Yii;
@@ -26,6 +25,7 @@ use Yii;
  */
 class Shop extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -40,10 +40,61 @@ class Shop extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id','name', 'address'], 'required'],
-            [['user_id', 'cookstyle_id', 'category_id', 'default', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'orgid','region_id', 'address', 'business_license', 'legalperson', 'mobile', 'remark'], 'string', 'max' => 255],
+            [
+                [
+                    'name',
+                    'address'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'user_id',
+                    'cookstyle_id',
+                    'category_id',
+                    'default',
+                    'status',
+                    'created_at',
+                    'updated_at'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'name',
+                    'orgid',
+                    'region_id',
+                    'address',
+                    'business_license',
+                    'legalperson',
+                    'mobile',
+                    'remark'
+                ],
+                'string',
+                'max' => 255
+            ]
         ];
+    }
+
+    /*
+     * 店铺保存之前添加额外的数组
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord) {
+                $this->orgid = 'AAAAAAA';
+                $this->user_id = Yii::$app->user->identity->id;
+                $this->default = '0';
+                $this->business_license = '';
+                $this->legalperson = '';
+                $this->mobile = '';
+                $this->status = 1;
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -67,23 +118,27 @@ class Shop extends \yii\db\ActiveRecord
             'remark' => 'Remark',
             'status' => '状态：1可用;0禁用',
             'created_at' => '创建时间',
-            'updated_at' => '更新时间',
+            'updated_at' => '更新时间'
         ];
     }
 
     /*
      * 获取 商铺类型
-    * */
+     */
     public function getShopcate()
     {
-        return $this->hasOne(ShopCategory::className(), ['id' => 'category_id']);
+        return $this->hasOne(ShopCategory::className(), [
+            'id' => 'category_id'
+        ]);
     }
 
     /*
      * 获取 菜系
-     * */
+     */
     public function getCookstyle()
     {
-        return $this->hasOne(Cookstyle::className(), ['id' => 'cookstyle_id']);
+        return $this->hasOne(Cookstyle::className(), [
+            'id' => 'cookstyle_id'
+        ]);
     }
 }
