@@ -9,7 +9,7 @@ use Yii;
  *
  * @property string $id
  * @property string $mobile
- * @property string $code
+ * @property integer $code
  * @property string $usage
  * @property string $result
  * @property string $error_code
@@ -35,10 +35,9 @@ class SmsLog extends \yii\db\ActiveRecord
     {
         return [
             [['mobile', 'code'], 'required'],
-            [['used', 'use_time', 'create_time'], 'integer'],
+            [['code', 'used', 'use_time', 'create_time'], 'integer'],
             [['mobile', 'usage'], 'string', 'max' => 20],
             ['mobile', 'match', 'pattern'=>'/^1[34578][0-9]{9}$/','message'=>'请输入正确的手机号'],
-            [['code'], 'string', 'max' => 6],
             [['result'], 'string', 'max' => 80],
             [['error_code', 'error_msg'], 'string', 'max' => 255],
         ];

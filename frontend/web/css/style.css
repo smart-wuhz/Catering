@@ -311,11 +311,13 @@ body{
 .xfs_top{
     padding: .05rem .13rem;
     border-bottom: 1px solid #d6d6d6;
+    position: relative;
 }
 .back_index{
-    float: right;
     font-size: .16rem;
-    margin-top: .1rem;
+    position: absolute;
+    right: 4vw;
+    top: .15rem;
 }
 .xf_clean {
     width: .24rem;
@@ -763,12 +765,60 @@ input::-webkit-input-placeholder {
 .los_btn{
     float: right;
 }
-.lis_ckbox{
+/*.lis_ckbox{*/
+    /*opacity: 0;*/
+    /*position: relative;*/
+    /*z-index: 2;*/
+/*}*/
+/*.lis_ckbox+label {*/
+    /*width: .12rem;*/
+    /*height: .12rem;*/
+    /*background: url("../images/check.png") no-repeat center;*/
+    /*background-size: .12rem;*/
+    /*position: absolute;*/
+    /*left: .02rem;*/
+    /*top: .02rem;*/
+    /*z-index: 1;*/
+/*}*/
+/*.lis_ckbox:checked+label {*/
+    /*background: url("../images/checked.png") no-repeat center;*/
+    /*background-size: .12rem;*/
+/*}*/
+
+.lis_name .field-loginform-rememberme{
+    position: relative;
+}
+#loginform-rememberme{
     opacity: 0;
     position: relative;
     z-index: 2;
 }
-.lis_ckbox+label {
+
+#loginform-rememberme+i {
+width: .12rem;
+height: .12rem;
+background: url("../images/check.png") no-repeat center;
+background-size: .12rem;
+position: absolute;
+left: .02rem;
+top: .02rem;
+z-index: 1;
+}
+#loginform-rememberme:checked+i {
+background: url("../images/checked.png") no-repeat center;
+background-size: .12rem;
+}
+
+.lis_name .field-signupform-agreement{
+    position: relative;
+}
+
+#signupform-agreement{
+    opacity: 0;
+    position: relative;
+    z-index: 2;
+}
+#signupform-agreement+i {
     width: .12rem;
     height: .12rem;
     background: url("../images/check.png") no-repeat center;
@@ -778,10 +828,11 @@ input::-webkit-input-placeholder {
     top: .02rem;
     z-index: 1;
 }
-.lis_ckbox:checked+label {
+#signupform-agreement:checked+i {
     background: url("../images/checked.png") no-repeat center;
     background-size: .12rem;
 }
+
 
 /*第三方登录*/
 .lgf_tit{
@@ -2282,7 +2333,7 @@ ul.cb_ul li {
     vertical-align: middle;
 }
 .ft_img{
-    width: 2.5rem;
+    width: 2.2rem;
     background-color: #000;
     height: .1rem;
     display: inline-block;

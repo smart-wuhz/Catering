@@ -70,13 +70,9 @@ $this->title = '登录 | 注册';
                         <!--记住账号-->
                         <div class="lost_psd">
                             <div class="lis_name">
-                                <!--<input type="hidden" name="LoginForm[rememberMe]" value="0">
-                                <input type="checkbox" id="loginform-rememberme" name="LoginForm[rememberMe]" value="1" checked="" calss="lis_ckbox">
-                                <i></i>记住账号-->
                                 <?=$form->field($model, 'rememberMe')->checkbox([
                                     'calss'=>'lis_ckbox',
-                                    'template' => "{input}\n{label}\n<i></i>\n{hint}\n{error}",
-                                    'label' => '记住账号',
+                                    'label' => '<i></i>记住账号',
                                 ])?>
                             </div>
                             <?=Html::a('忘记密码?', ['user/request-password-reset'],['class' => 'los_btn'])?>
@@ -118,7 +114,10 @@ $this->title = '登录 | 注册';
                         <!--记住账号-->
                         <div class="lost_psd">
                             <div class="lis_name">
-                                <?= $form->field($signup, 'agreement')->checkbox(['calss'=>'lis_ckbox','label' => '我认真阅读并接受<a href="#">《好多数据协议》</a>'])?>
+                                <?=$form->field($signup, 'agreement')->checkbox([
+                                    'calss'=>'lis_ckbox',
+                                    'label' => '<i></i>我认真阅读并接受<a href="#">《好多数据协议》</a>',
+                                ])?>
                             </div>
                         </div>
                     </div>

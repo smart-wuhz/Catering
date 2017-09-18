@@ -227,7 +227,7 @@ use yii\helpers\Html;
                         <?php foreach ($data['single_top5']['sales']['self'] as $key=>$item):?>
                             <li>
                                 <span class="tlli_a"><?=$item['name']?></span>
-                                <i class="li_sj">&nbsp;</i>
+                                <i class="li_sj_d">&nbsp;</i>
                                 <b>0<?=$key+1?></b>
                             </li>
                         <?php endforeach;?>
@@ -301,7 +301,7 @@ use yii\helpers\Html;
                         <?php foreach ($data['single_top5']['profit']['self'] as $key=>$item):?>
                             <li>
                                 <span class="tlli_a"><?=$item['name']?></span>
-                                <i class="li_sj">&nbsp;</i>
+                                <i class="li_sj_d">&nbsp;</i>
                                 <b>0<?=$key+1?></b>
                             </li>
                         <?php endforeach;?>
@@ -392,7 +392,7 @@ use yii\helpers\Html;
                         <?php foreach ($data['setmeal_top5']['sales']['self'] as $key=>$item):?>
                             <li>
                                 <span class="tlli_a"><?=$item['name']?></span>
-                                <i class="li_sj">&nbsp;</i>
+                                <i class="li_sj_d">&nbsp;</i>
                                 <b>0<?=$key+1?></b>
                             </li>
                         <?php endforeach;?>
@@ -467,7 +467,7 @@ use yii\helpers\Html;
                         <?php foreach ($data['setmeal_top5']['profit']['self'] as $key=>$item):?>
                             <li>
                                 <span class="tlli_a"><?=$item['name']?></span>
-                                <i class="li_sj">&nbsp;</i>
+                                <i class="li_sj_d">&nbsp;</i>
                                 <b>0<?=$key+1?></b>
                             </li>
                         <?php endforeach;?>

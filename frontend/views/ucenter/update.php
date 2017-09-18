@@ -28,24 +28,26 @@ use yii\bootstrap\ActiveForm;
         </div>
         <!--头部导航-->
         <div class="nav_hd">
-            <a href="#" class="nav_btn"><img src="/images/nav_btn.png"></a>
+            <a href="javascript:void(0)" class="nav_btn"><img src="/images/nav_btn.png"></a>
             <a href="<?=Url::toRoute(['/'])?>" class="idx"><img src="/images/idx.png"></a>
         </div>
 
-        <?php $form = ActiveForm::begin(['id' => 'update-form','action' => ['ucenter/update'],'method'=>'post']);?>
+        <?php $form = ActiveForm::begin(['id' => 'update-form','action' => ['ucenter/update','id'=>$model->id],'method'=>'post']);?>
         <!--编辑输入框-->
-        <div class="inp_bj"><?=$type?>
+        <div class="inp_bj">
             <?php
-            $input='';
             switch ($type){
-                case 'username':
-                    echo $input=$form->field($model, 'username')->textInput(['placeholder'=>'请输入昵称'])->label(false);
-                     break;
                 case 'email':
-                    echo $input=$form->field($model, 'email')->textInput(['placeholder'=>'请输入邮箱'])->label(false);
+                    echo $form->field($model, 'email')->textInput(['placeholder'=>'请输入邮箱'])->label(false);
+                    break;
+                case 'mobile':
+                    echo $form->field($model, 'mobile')->textInput(['placeholder'=>'请输入手机号'])->label(false);
+                    break;
+                case 'username':
+                default:
+                    echo $form->field($model, 'username')->textInput(['placeholder'=>'请输入昵称'])->label(false);
                     break;
             }?>
-           <!-- <input type="text" placeholder="请输入昵称">-->
         </div>
         <?=Html::submitButton('保存', ['class' => 'lg_btn']) ?>
         <?php ActiveForm::end();?>

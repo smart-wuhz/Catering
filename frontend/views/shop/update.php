@@ -39,7 +39,7 @@ $this->title = '编辑店铺';
             <ul class="swiper-wrapper">
                 <li class="swiper-slide">下滑选择推荐</li>
                 <?php foreach (ShopCategory::cateList() as $key=>$value):?>
-                    <li class="swiper-slide" value="<?=$value['id']?>"><?=$value['name']?></li>
+                    <li class="swiper-slide" data-id="<?=$value['id']?>"><?=$value['name']?></li>
                 <?php endforeach;?>
                 <li class="swiper-slide">已加载全部推荐</li>
             </ul>
@@ -58,7 +58,7 @@ $this->title = '编辑店铺';
             <ul class="swiper-wrapper">
                 <li class="swiper-slide">下滑选择菜系</li>
                 <?php foreach (Cookstyle::cookList('223') as $key=>$value):?>
-                    <li class="swiper-slide" value="<?=$value['id']?>"><?=$value['name']?></li>
+                    <li class="swiper-slide" data-id="<?=$value['id']?>"><?=$value['name']?></li>
                 <?php endforeach;?>
                 <li class="swiper-slide">已加载全部菜系</li>
             </ul>
@@ -77,7 +77,7 @@ $this->title = '编辑店铺';
         </div>
 
         <!--个人中心-->
-        <?php $form = ActiveForm::begin(['id' => 'form-update']); ?>
+        <?php $form = ActiveForm::begin(['id' => 'form-update','action' => ['shop/update','id'=>$model->id],'method'=>'post']); ?>
         <div class="mb_box add_dp">
             <div class="mb_item">
                 <span class="mbi_left">店铺名称</span>
@@ -113,7 +113,6 @@ $this->title = '编辑店铺';
                     </span>
                 </div>
             </div>
-
         </div>
         <?=Html::submitButton('保存', ['class' => 'bgdel_btn']) ?>
         <?php ActiveForm::end(); ?>
@@ -142,7 +141,7 @@ $this->title = '编辑店铺';
                 paginationClickable: true,
                 mousewheelControl: true
             });
-            selected(category_id,swiper_tj);
+            selected('category_id','tj_swp',swiper_tj);
         }
         function tjsxalertClose(){
             $(".sx_mask,.ct_ddd").removeClass("al_open");
@@ -156,7 +155,7 @@ $this->title = '编辑店铺';
                 paginationClickable: true,
                 mousewheelControl: true
             });
-            selected(cookstyle_id,swiper_dp);
+            selected('cookstyle_id','dp_swp',swiper_dp);
         }
         function dpsxalertClose(){
             $(".sx_mask,.zy_ddd").removeClass("al_open");
@@ -167,7 +166,7 @@ $this->title = '编辑店铺';
             tjsxalertOpne();
         })
 
-//        主营菜系
+        //主营菜系
         $(".zy_albtn").click(function(){
             dpsxalertOpne();
         })
@@ -178,18 +177,24 @@ $this->title = '编辑店铺';
             dpsxalertClose();
         })
 
-//        餐厅类型文字修改
+        //餐厅类型文字修改
         $(".ct_end").click(function(){
             var ct_txt = $(".ct_ddd .swiper-slide-next").text();
             $(".ct_albtn").text(ct_txt);
             tjsxalertClose();
+
+            var id =$(".ct_ddd .swiper-slide-next").attr('data-id');
+            $("#category_id").val(id);
         })
 
-//        菜系文字切换
+        //菜系文字切换
         $(".zy_end").click(function(){
             var zy_txt = $(".zy_ddd .swiper-slide-next").text();
             $(".zy_albtn").text(zy_txt);
             dpsxalertClose();
+
+            var id =$(".zy_ddd .swiper-slide-next").attr('data-id');
+            $("#cookstyle_id").val(id);
         })
 
         var area1 = new LArea();
@@ -216,24 +221,15 @@ $this->title = '编辑店铺';
             'type': 2,
             'data': [provs_data.data, citys_data.data, dists_data.data]
         });
-
-       /* //选中状态
-        var ct_albtn_txt = $(".ct_albtn").text();
-        $(".tj_swp li").each(function(index){
-            var ttt= $(this).text();
-            if(ttt == ct_albtn_txt) {
-                swiper_tj.slideTo(index);
-            }
-        });*/
     });
 
     //选中状态
-    function selected(id,swiper) {
-        var ct_albtn_txt = $("#"+id).val();
-        $("."+swiper+" li").each(function(index){
-            var ttt= $(this).attr('value');
-            if(ttt == ct_albtn_txt) {
-                swiper_tj.slideTo(index);
+    function selected(id,classname,swiper) {
+        var selectID= $("#"+id).val();
+        $("."+classname+" li").each(function(index){
+            var ttt= $(this).attr('data-id');
+            if(ttt == selectID) {
+                swiper.slideTo(index);
             }
         });
     }

@@ -65,7 +65,10 @@ class ShopController extends Controller
     {
         $model = new Shop();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            $id=$model->attributes['id'];
+            print_r($id);
+            exit;
+            //return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

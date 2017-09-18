@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <ul class="swiper-wrapper">
                 <li class="swiper-slide">下滑选择推荐</li>
                 <?php foreach (ShopCategory::cateList() as $value):?>
-                    <li class="swiper-slide" cate-id="<?=$value['id']?>"><?=$value['name']?></li>
+                    <li class="swiper-slide" data-id="<?=$value['id']?>"><?=$value['name']?></li>
                 <?php endforeach;?>
                 <li class="swiper-slide">已加载全部推荐</li>
             </ul>
@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <ul class="swiper-wrapper">
                 <li class="swiper-slide">下滑选择菜系</li>
                 <?php foreach (Cookstyle::cookList('223') as $value):?>
-                <li class="swiper-slide" cook-id="<?=$value['id']?>" ><?=$value['name']?></li>
+                <li class="swiper-slide" data-id="<?=$value['id']?>" ><?=$value['name']?></li>
                 <?php endforeach;?>
                 <li class="swiper-slide">已加载全部菜系</li>
             </ul>
@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <!--个人中心-->
-        <?php $form = ActiveForm::begin(['id' => 'form-create']); ?>
+        <?php $form = ActiveForm::begin(['id' => 'form-create','action' => ['shop/create'],'method'=>'post']); ?>
         <div class="mb_box add_dp">
             <div class="mb_item">
                 <span class="mbi_left">店铺名称</span>
@@ -92,12 +92,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="mbi_name">
                     <span class="mbi_left">餐厅类型</span>
                     <span class="mbi_right arr_right ct_albtn">请选择类型</span>
-                    <input type="hidden" id="category_id" class="form-control" name="Shop[category_id]" value="">
+                    <?= $form->field($model, 'category_id')->hiddenInput(['id' =>'category_id'])->label(false) ?>
                 </div>
                 <div class="mbi_psd">
                     <span class="mbi_left">主营菜系</span>
                     <span class="mbi_right arr_right zy_albtn">请选择菜系</span>
-                    <input type="hidden" id="cookstyle_id" class="form-control" name="Shop[cookstyle_id]" value="">
+                    <?= $form->field($model, 'cookstyle_id')->hiddenInput(['id' =>'cookstyle_id'])->label(false) ?>
                 </div>
             </div>
 
@@ -179,7 +179,8 @@ $this->params['breadcrumbs'][] = $this->title;
         // 餐厅类型文字修改
         $(".ct_end").click(function(){
             var ct_txt = $(".ct_ddd .swiper-slide-next").text();
-            var cateID=$(".ct_ddd .swiper-slide-next").attr('cate-id');
+            var cateID=$(".ct_ddd .swiper-slide-next").attr('data-id');
+            //console.log(cateID);
             $("#category_id").val(cateID);
             $(".ct_albtn").text(ct_txt);
             tjsxalertClose();
@@ -188,7 +189,8 @@ $this->params['breadcrumbs'][] = $this->title;
         //菜系文字切换
         $(".zy_end").click(function(){
             var zy_txt = $(".zy_ddd .swiper-slide-next").text();
-            var cookID=$(".zy_ddd .swiper-slide-next").attr('cook-id');
+            var cookID=$(".zy_ddd .swiper-slide-next").attr('data-id');
+            //console.log(cookID);
             $("#cookstyle_id").val(cookID);
             $(".zy_albtn").text(zy_txt);
             dpsxalertClose();

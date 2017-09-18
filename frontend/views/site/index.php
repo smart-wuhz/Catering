@@ -14,7 +14,7 @@ use yii\helpers\Html;
     <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="/js/swiper-3.4.2.jquery.min.js"></script>
     <script type="text/javascript" src="/js/autocomplete.js"></script>
-    <title>首页</title>
+    <title><?=Html::encode('首页')?></title>
 </head>
 <body>
 <div class="idx_main">
@@ -30,7 +30,7 @@ use yii\helpers\Html;
 
         <!--头部导航-->
         <div class="nav_hd">
-            <a href="javascript:void(0)" class="nav_btn"><img src="/images/nav_btn.png"></a>
+            <a href="javascript::void(0)" class="nav_btn"><img src="/images/nav_btn.png"></a>
             <a href="<?= Url::toRoute('/') ?>" class="idx"><img src="/images/idx.png"></a>
         </div>
 
@@ -71,8 +71,6 @@ use yii\helpers\Html;
         <div class="idx_sh"></div>
     </div>
 </div>
-
-<script type="text/javascript" src="/js/main.js"></script>
 <script>
     (function () {
         //banner配置

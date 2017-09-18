@@ -1,12 +1,7 @@
 <?php
 use \yii\helpers\Url;
 use yii\helpers\Html;
-
 $this->title = '个人中心';
-$this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['update', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,36 +34,24 @@ $this->params['breadcrumbs'][] = 'Update';
 
         <!--个人中心-->
         <div class="mb_box">
+
             <div class="mb_item">
                 <span class="mbi_left">昵称</span>
-                <a href="<?=Url::toRoute(['ucenter/update','type'=>'username'])?>">
+                <a href="<?=Url::toRoute(['ucenter/update','id'=>$model->id,'type'=>'username'])?>">
                 <span class="mbi_right arr_right"><?=$model->username?></span>
                 </a>
             </div>
 
-            <!--<div class="mb_item mb_two">
-                <div class="mbi_name">
-                    <span class="mbi_left">账号</span>
-                    <span class="mbi_right arr_right">absdasdas</span>
-                </div>
-                <div class="mbi_psd">
-                    <span class="mbi_left">密码</span>
-                    <span class="mbi_right"> </span>
-                </div>
-            </div>-->
-
             <div class="mb_item">
                 <span class="mbi_left">邮箱</span>
-                <!--<span class="mbi_right ">absdasdas</span>-->
-                <a href="<?=Url::toRoute(['ucenter/update','type'=>'email'])?>">
+                <a href="<?=Url::toRoute(['ucenter/update','id'=>$model->id,'type'=>'email'])?>">
                     <span class="mbi_right arr_right"><?=substr_replace($model->email,'****','-12','4')?></span>
                 </a>
             </div>
 
             <div class="mb_item">
                 <span class="mbi_left">手机号码</span>
-                <!--<span class="mbi_right arr_right">186****2568</span>-->
-                <a href="<?=Url::toRoute(['ucenter/update-mobile'])?>">
+                <a href="<?=Url::toRoute(['ucenter/update','id'=>$model->id,'type'=>'mobile'])?>">
                     <span class="mbi_right arr_right"><?=substr_replace($model->mobile,'****','3','4')?></span>
                 </a>
             </div>

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-09-13 18:55:12
+Date: 2017-09-18 18:14:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -937,7 +937,7 @@ CREATE TABLE `shop` (
 -- Records of shop
 -- ----------------------------
 INSERT INTO `shop` VALUES ('2', '1', 'AAAAAAA', '家之味', '310000,310100,310115', '上海市浦东新区南泉北路1101号', '230', '2', '0', null, null, null, null, '1', null, null);
-INSERT INTO `shop` VALUES ('3', '1', 'AAAAAAA', '爱情海', '310000,310100,310115', '上海市浦东新区浦东南路1101号', '230', '2', '1', null, null, null, null, '1', null, null);
+INSERT INTO `shop` VALUES ('3', '1', 'AAAAAAA', '爱情海', '310000,310100,310115', '上海市浦东新区浦东南路1101号远东大厦', '231', '1', '1', null, null, null, null, '1', null, null);
 
 -- ----------------------------
 -- Table structure for shop_category
@@ -970,7 +970,7 @@ DROP TABLE IF EXISTS `sms_log`;
 CREATE TABLE `sms_log` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `mobile` varchar(20) NOT NULL COMMENT '手机号',
-  `code` varchar(6) NOT NULL COMMENT '验证码',
+  `code` int(6) NOT NULL COMMENT '验证码',
   `usage` varchar(20) NOT NULL DEFAULT '' COMMENT '用途',
   `result` varchar(80) DEFAULT '' COMMENT '发送结果',
   `error_code` varchar(255) DEFAULT '' COMMENT '错误码',
@@ -979,12 +979,15 @@ CREATE TABLE `sms_log` (
   `use_time` int(11) DEFAULT '0' COMMENT '使用时间',
   `create_time` int(11) DEFAULT '0' COMMENT '发送时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sms_log
 -- ----------------------------
 INSERT INTO `sms_log` VALUES ('9', '18658133898', '888888', 'userRegister', '', '', '', '1', '1504768076', '1504768060');
+INSERT INTO `sms_log` VALUES ('10', '18621051865', '324258', 'verifyCode', '', '', '', '0', '0', '1505698830');
+INSERT INTO `sms_log` VALUES ('11', '18621051865', '753219', 'verifyCode', '', '', '', '0', '0', '1505700937');
+INSERT INTO `sms_log` VALUES ('12', '18621051865', '372735', 'verifyCode', '', '', '', '0', '0', '1505700990');
 
 -- ----------------------------
 -- Table structure for system_config
@@ -1085,7 +1088,7 @@ CREATE TABLE `system_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `uid` int(11) DEFAULT NULL,
   `message` varchar(512) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '消息内容',
-  `status` tinyint(1) DEFAULT '0' COMMENT '状态：0、未发布 1、已发布',
+  `is_read` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否已读',
   `is_del` tinyint(1) DEFAULT '0' COMMENT '是否删除：0、未删除 1、删除',
   `creator` int(11) unsigned DEFAULT NULL COMMENT '创建人',
   `created_at` int(11) DEFAULT NULL,
@@ -1096,23 +1099,15 @@ CREATE TABLE `system_message` (
 -- ----------------------------
 -- Records of system_message
 -- ----------------------------
-INSERT INTO `system_message` VALUES ('29', '1', '76575675675', '1', '0', '1', null, null);
-INSERT INTO `system_message` VALUES ('30', '1', '也让他一人', '1', '0', '1', null, null);
-INSERT INTO `system_message` VALUES ('31', '1', '发的说法是否', '1', '0', '2', null, null);
-INSERT INTO `system_message` VALUES ('32', '1', '人分为特热特特人', '1', '0', '1', null, null);
-INSERT INTO `system_message` VALUES ('33', '1', '塔尔图问题好吧', '1', '0', '1', null, null);
-INSERT INTO `system_message` VALUES ('42', '1', '测试  添加不推送', '1', '0', '1', null, null);
-INSERT INTO `system_message` VALUES ('43', '1', '测试 添加直接推送', '1', '0', '1', null, null);
-INSERT INTO `system_message` VALUES ('44', '1', '213123', '1', '0', '1', null, null);
-INSERT INTO `system_message` VALUES ('45', '1', '54354353453', '1', '1', '1', null, null);
-INSERT INTO `system_message` VALUES ('46', '1', 'opp', '1', '0', '1', null, null);
-INSERT INTO `system_message` VALUES ('47', '1', '测试 系统消息', '1', '0', '1', null, null);
-INSERT INTO `system_message` VALUES ('48', '1', '1111', '1', '1', '1', null, null);
-INSERT INTO `system_message` VALUES ('49', '1', '111', '1', '1', '1', null, null);
+INSERT INTO `system_message` VALUES ('45', '1', '54354353453', '0', '1', '1', null, null);
+INSERT INTO `system_message` VALUES ('46', '1', 'opp', '0', '0', '1', null, null);
+INSERT INTO `system_message` VALUES ('47', '1', '测试 系统消息', '0', '0', '1', null, null);
+INSERT INTO `system_message` VALUES ('48', '1', '1111', '0', '1', '1', null, null);
+INSERT INTO `system_message` VALUES ('49', '1', '111', '0', '1', '1', null, null);
 INSERT INTO `system_message` VALUES ('50', '1', '11111111111111111', '0', '1', '1', null, null);
-INSERT INTO `system_message` VALUES ('51', '1', '哈哈哈 ', '1', '0', '1', null, null);
-INSERT INTO `system_message` VALUES ('52', '1', '哈哈哈 ', '1', '0', '1', null, null);
-INSERT INTO `system_message` VALUES ('53', '1', '环信移动客服与环信即时通讯SDK共享核心代码，历经8万多家企业和App客户验证，每日亿级用户同时在线易观智库报告显示环信SaaS客服移动端占有率高达77.4%，是最受用户欢迎的移动端客服平台', '1', '0', '1', null, null);
+INSERT INTO `system_message` VALUES ('51', '1', '哈哈哈 ', '0', '0', '1', null, null);
+INSERT INTO `system_message` VALUES ('52', '1', '哈哈哈 ', '0', '0', '1', null, null);
+INSERT INTO `system_message` VALUES ('53', '1', '环信移动客服与环信即时通讯SDK共享核心代码，历经8万多家企业和App客户验证，每日亿级用户同时在线易观智库报告显示环信SaaS客服移动端占有率高达77.4%，是最受用户欢迎的移动端客服平台', '0', '0', '1', null, null);
 
 -- ----------------------------
 -- Table structure for system_region
@@ -4771,7 +4766,6 @@ CREATE TABLE `user` (
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`) USING BTREE,
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `mobile` (`mobile`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -4779,5 +4773,5 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', '18658133891', 'sky_whz@163.com', null, 'jFvrE4duAenPMaXQjtA84XW4tHFatFyQ', '$2y$13$YESS1wmydtU9PCm7LE3v1OFRi.Rk99JDlqqoWH57jUGvpflOkXmKu', null, '10', null, '1496209762', '1496209762');
+INSERT INTO `user` VALUES ('1', 'admin', '18658133893', 'sky_whz@163.com', null, 'jFvrE4duAenPMaXQjtA84XW4tHFatFyQ', '$2y$13$YESS1wmydtU9PCm7LE3v1OFRi.Rk99JDlqqoWH57jUGvpflOkXmKu', null, '10', null, '1496209762', '1505726717');
 INSERT INTO `user` VALUES ('2', '18658133898', '18658133898', '', null, 'BiL0xvVt4k-y4J2AwTiQ17DtHVpr7gdQ', '$2y$13$gDCrWBCSx/JZBCWMGhyfquqZz3uHmCflCvd8kEVlARN0kzW4SbJKm', null, '10', null, '1504768077', '1504768077');

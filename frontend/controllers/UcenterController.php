@@ -8,6 +8,7 @@ use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Response;
 
 /**
  * Ucenter controller
@@ -23,12 +24,12 @@ class UcenterController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'update' => ['get','post'],
+                    'update' => ['get', 'post'],
                 ],
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','update','updatemobile'],
+                'only' => ['index', 'update', 'updatemobile'],
                 'rules' => [
                     // 允许认证用户
                     [
@@ -47,13 +48,13 @@ class UcenterController extends Controller
      */
     public function actionIndex()
     {
-        $id=Yii::$app->user->identity->id;
+        $id = Yii::$app->user->identity->id;
         $model = $this->findModel($id);
-        return $this->render('index',[
-            'model'=>$model
+        return $this->render('index', [
+            'model' => $model
         ]);
     }
-    
+
     /**
      * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'index' page.
@@ -63,13 +64,15 @@ class UcenterController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $updateType = Yii::$app->request->get('type');
+        $type = in_array($updateType, ['username', 'email','mobile']) ? $updateType : 'username';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['ucenter/index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'type'=>Yii::$app->request->get('type')
+                'type' => $type
             ]);
         }
     }

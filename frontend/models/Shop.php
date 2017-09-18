@@ -40,7 +40,7 @@ class Shop extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'orgid', 'name', 'address'], 'required'],
+            [['user_id','name', 'address'], 'required'],
             [['user_id', 'cookstyle_id', 'category_id', 'default', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name', 'orgid','region_id', 'address', 'business_license', 'legalperson', 'mobile', 'remark'], 'string', 'max' => 255],
         ];
