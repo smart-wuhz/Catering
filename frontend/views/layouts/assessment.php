@@ -135,14 +135,14 @@ use yii\helpers\Html;
                     async : false,
                     cache : false,
                     type : 'post',
-                    url : '/index.php/assessment/change',// 请求的action路径
+                    url : "<?=Url::toRoute(['assessment/change'])?>",// 请求的action路径
                     dataType:"json",
                     data:"shopid="+shopid+"&orgid="+orgid+"&"+csrfParam+"="+csrfToken,
                     error : function() {// 请求失败处理函数
                     },
                     success:function(result){
                         console.log(result);
-                        location.href='/index.php/assessment/index';
+                        location.href="<?=Url::toRoute(['assessment/index'])?>";
                     }
                 });
             }

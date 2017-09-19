@@ -30,7 +30,7 @@ use yii\helpers\Html;
 
         <!--头部导航-->
         <div class="nav_hd">
-            <a href="javascript::void(0)" class="nav_btn"><img src="/images/nav_btn.png"></a>
+            <a href="javascript:void(0)" class="nav_btn"><img src="/images/nav_btn.png"></a>
             <a href="<?= Url::toRoute('/') ?>" class="idx"><img src="/images/idx.png"></a>
         </div>
 
@@ -129,7 +129,7 @@ use yii\helpers\Html;
         var queryParam = {"<?=Yii::$app->request->csrfParam?>": csrfToken};
         $.ajax({
             type: 'post',
-            url: '/index.php/site/shop-list',// 请求的action路径
+            url: "<?=Url::toRoute(['site/shop-list'])?>",// 请求的action路径
             dataType: "json",
             data: queryParam,
             error: function () {// 请求失败处理函数
@@ -140,7 +140,7 @@ use yii\helpers\Html;
                     for (var i = 0; i < result.data.length; i++) {
                         str += '<li class="his_li"><a href="javascript:void(0)" class="his_link">' + result.data[i] + '</a></li>';
                     }
-                    $(".xf_search .his_ul").append(str);
+                    $(".xf_search .his_ul").empty().append(str);
                 } else {
                     alert(result.msg);
                 }

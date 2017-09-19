@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\controllers;
 
 use Yii;
@@ -64,7 +65,8 @@ class ShopController extends Controller
     {
         return $this->render('index', [
             'dataProvider' => Shop::findAll([
-                'status' => '1'
+                'status' => '1',
+                'user_id' => Yii::$app->user->id,
             ])
         ]);
     }
@@ -79,9 +81,7 @@ class ShopController extends Controller
     {
         $model = new Shop();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect([
-                'index'
-            ]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model
@@ -93,18 +93,16 @@ class ShopController extends Controller
      * Updates an existing Shop model.
      * If update is successful, the browser will be redirected to the 'view' page.
      *
-     * @param string $id            
+     * @param string $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
         $regionName = Region::getNameByRegionid($model->region_id);
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect([
-                'index'
-            ]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -116,7 +114,7 @@ class ShopController extends Controller
     /**
      * Update Default shop an existing Shop model.
      *
-     * @param string $id            
+     * @param string $id
      * @return mixed
      */
     public function actionUpdateDefault()
@@ -124,55 +122,35 @@ class ShopController extends Controller
         if (Yii::$app->request->isAjax) {
             $db = Yii::$app->db;
             $transaction = $db->beginTransaction(); // 开启事务
-            
+
             try {
-                $id = (int) Yii::$app->request->post('shopid');
-                $model = Shop::findOne([
-                    'id' => $id,
-                    'user_id' => Yii::$app->user->identity->id
-                ]);
+                $id = (int)Yii::$app->request->post('shopid');
+                $model = Shop::findOne(['id' => $id, 'user_id' => Yii::$app->user->identity->id]);
                 $model->default = '1';
-                
-                if (! $model->save()) {
+
+                if (!$model->save()) {
                     $error = array_values($model->getFirstErrors())[0];
                     throw new Exception($error); // 抛出异常
                 }
-                
-                $all = Shop::find()->where([
-                    'user_id' => Yii::$app->user->identity->id
-                ])
-                    ->where([
-                    '<>',
-                    'id',
-                    $id
-                ])
-                    ->all();
+
+                $all = Shop::find()->where(['user_id' => Yii::$app->user->identity->id])->where(['<>', 'id', $id])->all();
                 foreach ($all as $item) {
                     $item->default = 0;
                     // skipping validation as no user input is involved
-                    if (! $item->update(false)) {
+                    if (!$item->save()) {
                         $error = array_values($item->getFirstErrors())[0];
                         throw new Exception($error); // 抛出异常
                     }
                 }
                 $transaction->commit();
-                
-                return Json::encode([
-                    'status' => '0',
-                    'msg' => 'OK'
-                ]);
+
+                return Json::encode(['status' => '0', 'msg' => 'OK']);
             } catch (Exception $e) {
                 $transaction->rollBack();
-                return Json::encode([
-                    'status' => '1',
-                    'msg' => $e->getMessage()
-                ]);
+                return Json::encode(['status' => '1', 'msg' => $e->getMessage()]);
             }
         }
-        return Json::encode([
-            'status' => '0',
-            'msg' => 'OK'
-        ]);
+        return Json::encode(['status' => '0', 'msg' => 'OK']);
     }
 
     // 店铺入住
@@ -190,23 +168,21 @@ class ShopController extends Controller
      * Deletes an existing Shop model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      *
-     * @param string $id            
+     * @param string $id
      * @return mixed
      */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-        
-        return $this->redirect([
-            'index'
-        ]);
+
+        return $this->redirect(['index']);
     }
 
     /**
      * Finds the Shop model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      *
-     * @param string $id            
+     * @param string $id
      * @return Shop the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

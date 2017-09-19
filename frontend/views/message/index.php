@@ -92,7 +92,7 @@ $this->title = '消息列表';
         if(shopid){
             $.ajax({
                 type : 'post',
-                url : '/index.php/message/delete',// 请求的action路径
+                url : "<?=Url::toRoute(['message/delete'])?>",// 请求的action路径
                 dataType:"json",
                 data:"id="+shopid+"&"+csrfParam+"="+csrfToken,
                 error : function() {// 请求失败处理函数
