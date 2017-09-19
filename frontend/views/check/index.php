@@ -44,14 +44,14 @@ use yii\helpers\Html;
         </div>
 
         <div class="sx_mask">&nbsp;</div>
-        <!--筛选弹窗-->
 
+        <!--推荐筛选弹窗-->
         <div class="tj_alert tj_ddd">
             <div class="al_tit">
                 <a href="javascript:void(0)" class="albtn_left">取消</a>
                 <a href="javascript:void(0)" class="albtn_right">确定</a>
             </div>
-            <div class="alsx_body swiper-container tj_swp" id="tjOrder">
+            <div class="alsx_body swiper-container tj_swp" >
                 <div class="dwwo">&nbsp;</div>
                 <ul class="swiper-wrapper">
                     <li class="swiper-slide">下滑选择推荐</li>
@@ -75,7 +75,8 @@ use yii\helpers\Html;
                 <ul class="swiper-wrapper">
                     <li class="swiper-slide">下滑选择店铺</li>
                     <?php foreach ($shopList as $value):?>
-                        <li class="swiper-slide" data-id="<?=$value['id']?>" ><?=$value['name']?></li>
+                        <li class="swiper-slide" data-id="<?=$value['id']?>"
+                         org-id="<?=$value['orgid']?>" ><?=$value['name']?></li>
                     <?php endforeach;?>
                     <li class="swiper-slide">已加载全部店铺</li>
                 </ul>
@@ -112,12 +113,12 @@ use yii\helpers\Html;
             </div>
 
             <div class="bg_sx">
-                <a href="#" class="sx_item tj_sx bgsx_ck">推荐排序</a>
-                <a href="#" class="sx_item dp_sx">店铺筛选</a>
-                <a href="#" class="sx_item tm_sx">时间排序</a>
+                <a href="javascript:void(0)" class="sx_item tj_sx bgsx_ck">推荐排序</a>
+                <a href="javascript:void(0)" class="sx_item dp_sx">店铺筛选</a>
+                <a href="javascript:void(0)" class="sx_item tm_sx">时间排序</a>
             </div>
 
-            <input name="appDate" id="appDate"  type="text" value="2015-05-25" style="opacity: 0;position: absolute;z-index: 1;right: 100vh;top: 0;">
+            <input name="appDate" id="appDate"  type="text" value="" style="opacity: 0;position: absolute;z-index: 1;right: 100vh;top: 0;">
 
             <!--内容切换-->
             <div class="swiper-wrapper">
@@ -203,8 +204,11 @@ use yii\helpers\Html;
     </div>
 </div>
 
-<script>
-    (function(){
+<script> 
+    // ????? 全局变量在函数内部改动后，值不变  ？？？？？？
+    var activeIndex; 
+
+    $(function(){
         //推荐筛选
         $(".tj_sx").click(function(){
             tjsxalertOpne();
@@ -227,17 +231,16 @@ use yii\helpers\Html;
             tmsxalertClose();
         })
 
+        //当前活动页面 0为基础报告 1为进阶报告
         var mySwiper = new Swiper('.login_swbox', {
             onSlideChangeStart: function(swiper){
-                var swb_index = mySwiper.activeIndex;
+                activeIndex = mySwiper.activeIndex;
+                console.log(activeIndex);
                 $(".nav_swipper").find("a").removeClass("cknav");
-                $(".nav_swipper").find("a").eq(swb_index).addClass("cknav");
+                $(".nav_swipper").find("a").eq(activeIndex).addClass("cknav");
             }
         });
-        var swb_index = mySwiper.activeIndex;
-        $(".nav_swipper").find("a").removeClass("cknav");
-        $(".nav_swipper").find("a").eq(swb_index).addClass("cknav");
-
+        
         $(".nav_swipper").find("a").each(function(index){
             $(this).click(function(){
                 $(".nav_swipper").find("a").removeClass("cknav");
@@ -252,18 +255,48 @@ use yii\helpers\Html;
             $(this).addClass("bgsx_ck");
         })
 
+        //自定义时间选择    
         $(".time_sx").click(function(){
             tmsxalertClose();
             $("#appDate")[0].focus();
         })
 
-        //请求
+         //请求
         var data = {
-            user:'userName',
-            pass:'12121'
+            'activeIndex':activeIndex
         };
         ajaxRequset(data);
-    })();
+
+        //推荐确认
+        $(".tj_ddd").delegate("a[class='albtn_right']",'click',function(){
+            var cateID=$(".tj_ddd .swiper-slide-next").attr('data-id');
+            data.recommend=cateID; 
+            console.log(data); 
+            ajaxRequset(data);  
+            tjsxalertClose();    
+        });
+
+        //店铺筛选确认
+        $(".dp_ddd").delegate("a[class='albtn_right']",'click',function(){
+            var id=$(".dp_ddd .swiper-slide-next").attr('data-id');
+            var orgID=$(".dp_ddd .swiper-slide-next").attr('org-id');
+            data.orgID=orgID; 
+            data.id=id;
+            console.log(data); 
+            ajaxRequset(data);  
+            dpsxalertOpne();    
+        });
+
+        //时间筛选确认
+        $(".tm_ddd").delegate("a[class='albtn_right']",'click',function(){
+            var time=$(".tm_ddd .swiper-slide-next").attr('data-id');
+            data.time=time;
+            //console.log(data); 
+            ajaxRequset(data);  
+            tmsxalertClose();    
+        });
+
+    });
 
 
     //推荐筛选弹窗开关
@@ -276,6 +309,7 @@ use yii\helpers\Html;
             mousewheelControl: true
         });
     }
+
     function tjsxalertClose(){
         $(".sx_mask,.tj_ddd").removeClass("al_open");
     }
@@ -307,7 +341,6 @@ use yii\helpers\Html;
     }
     function tmsxalertClose(){
         $(".sx_mask,.tm_ddd").removeClass("al_open");
-        var cateID=$(".ct_ddd .swiper-slide-next").attr('data-id');
     }
 
     //ajaxRequset
