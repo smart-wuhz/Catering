@@ -537,7 +537,7 @@
                 }
                 html += '</tr></table></div></div>';
             }
-            html += (s.display != 'inline' ? '<div class="dwbc' + (s.button3 ? ' dwbc-p' : '') + '"><span class="dwbw dwb-s"><span class="dwb" style="color: #4a8dfa;background-color: #eaf2ff;">' + s.setText + '</span></span>' + (s.button3 ? '<span class="dwbw dwb-n"></span>' : '') + '<span class="dwbw dwb-c"><span class="dwb" >' + s.cancelText + '</span></span></div></div>' : '<div class="dwcc"></div>') + '</div></div></div>';
+            html += (s.display != 'inline' ? '<div class="dwbc' + (s.button3 ? ' dwbc-p' : '') + '"><span class="dwbw dwb-s"><span class="dwb" id="timeChange" style="color: #4a8dfa;background-color: #eaf2ff;">' + s.setText + '</span></span>' + (s.button3 ? '<span class="dwbw dwb-n"></span>' : '') + '<span class="dwbw dwb-c"><span class="dwb" >' + s.cancelText + '</span></span></div></div>' : '<div class="dwcc"></div>') + '</div></div></div>';
             dw = $(html);
 
             scrollToPos();

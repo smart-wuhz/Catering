@@ -299,13 +299,16 @@ class AssessmentController extends Controller
     private function setDefaultShop()
     {
         if (empty(Yii::$app->session['default_shop'])) {
-            $uid = Yii::$app->user->identity->id;
-            $shop = Shop::find()->where(['user_id' => $uid, 'default' => '1'])->select(['id', 'orgid', 'name'])->asArray()->one();
-
-            Yii::$app->session['default_shop'] = [
-                'orgID' => $shop['orgid'],
-                'restaurantName' => $shop['name'],
-            ];
+            if (isset(Yii::$app->user->identity->id) && !empty(Yii::$app->user->identity->id)) {
+                $uid = Yii::$app->user->identity->id;
+                $shop = Shop::find()->where(['user_id' => $uid, 'default' => '1'])->select(['id', 'orgid', 'name'])->asArray()->one();
+                Yii::$app->session['default_shop'] = [
+                    'orgID' => $shop['orgid'],
+                    'restaurantName' => $shop['name'],
+                ];
+            } else {
+                return $this->goHome();
+            }
         }
     }
 }

@@ -96,7 +96,13 @@ class CheckController extends UcenterController
     public function actionDelete()
     {
         if(Yii::$app->request->isAjax){
-
+            Yii::$app->response->format=Response::FORMAT_JSON;
+            Yii::$app->response->data = [
+                'err' => '0',
+                'msg' => 'OK',
+                'result' => '111'
+            ];
+            Yii::$app->response->send();
         }
     }
 }

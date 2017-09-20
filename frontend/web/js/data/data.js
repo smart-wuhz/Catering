@@ -29,5 +29,6 @@ $(function () {
         var d=today.getDate();
         return h+"-"+m+"-"+d;
     }
-    document.getElementById("appDate").value = today();
+    //document.getElementById("appDate").value = today();
+    console.log($("#appDate").val());
 });

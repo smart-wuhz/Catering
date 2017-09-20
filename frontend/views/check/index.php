@@ -203,12 +203,13 @@ use yii\helpers\Html;
 
     </div>
 </div>
-
-<script> 
-    // ????? 全局变量在函数内部改动后，值不变  ？？？？？？
-    var activeIndex; 
-
+<script>
+    var csrfToken = $('meta[name="csrf-token"]').attr("content");
+    var csrfParam = $('meta[name="csrf-param"]').attr("content");
     $(function(){
+        //请求
+        var data = {};
+
         //推荐筛选
         $(".tj_sx").click(function(){
             tjsxalertOpne();
@@ -235,12 +236,12 @@ use yii\helpers\Html;
         var mySwiper = new Swiper('.login_swbox', {
             onSlideChangeStart: function(swiper){
                 activeIndex = mySwiper.activeIndex;
-                console.log(activeIndex);
+                data.activeIndex=activeIndex;
+                //console.log(activeIndex);
                 $(".nav_swipper").find("a").removeClass("cknav");
                 $(".nav_swipper").find("a").eq(activeIndex).addClass("cknav");
             }
         });
-        
         $(".nav_swipper").find("a").each(function(index){
             $(this).click(function(){
                 $(".nav_swipper").find("a").removeClass("cknav");
@@ -261,10 +262,7 @@ use yii\helpers\Html;
             $("#appDate")[0].focus();
         })
 
-         //请求
-        var data = {
-            'activeIndex':activeIndex
-        };
+        //初始加载数据
         ajaxRequset(data);
 
         //推荐确认
@@ -287,15 +285,19 @@ use yii\helpers\Html;
             dpsxalertOpne();    
         });
 
-        //时间筛选确认
+        //时间筛选确认 [非自定义]
         $(".tm_ddd").delegate("a[class='albtn_right']",'click',function(){
             var time=$(".tm_ddd .swiper-slide-next").attr('data-id');
             data.time=time;
-            //console.log(data); 
-            ajaxRequset(data);  
-            tmsxalertClose();    
+            console.log(time);
+            ajaxRequset(data);
+            tmsxalertClose();
         });
 
+        //时间筛选确认 [自定义]
+        /*
+        * Todo
+        * */
     });
 
 
@@ -339,6 +341,7 @@ use yii\helpers\Html;
             mousewheelControl: true
         });
     }
+
     function tmsxalertClose(){
         $(".sx_mask,.tm_ddd").removeClass("al_open");
     }
@@ -346,8 +349,6 @@ use yii\helpers\Html;
     //ajaxRequset
     function ajaxRequset(queryPargam)
     {
-        var csrfToken = $('meta[name="csrf-token"]').attr("content");
-        var csrfParam = $('meta[name="csrf-param"]').attr("content");
         if (queryPargam) {
             queryPargam[csrfParam] = csrfToken;
             $.ajax({
@@ -407,6 +408,24 @@ use yii\helpers\Html;
                 }
             });
         }
+    }
+    
+    //delRport
+    function delRport(id) {
+        var queryPargam={};
+        queryPargam[csrfParam]=csrfToken;
+        queryPargam['dataID']=id;
+        $.ajax({
+            type: 'post',
+            url: "<?=Url::toRoute(['check/delete'])?>",// 请求的action路径
+            dataType: "json",
+            data: queryPargam,
+            error: function () {// 请求失败处理函数
+            },
+            success: function (result) {
+
+            }
+        });
     }
 </script>
 </body>
