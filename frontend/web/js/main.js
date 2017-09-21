@@ -29,9 +29,29 @@
 
 
     //弹窗事件
+
+    //认领报告
     $(".rl_btn").click(function(){
-        rzopen();
+        //ReportClaim
+        $.ajax({
+            type: 'post',
+            url: "/check/report-claim/",// 请求的action路径
+            dataType: "json",
+            data: queryPargam,
+            error: function () {// 请求失败处理函数
+            },
+            success: function (result) {
+                if(result.err==0) {
+                    rzopen();
+                }else{
+                    /*
+                    *  todo 提示信息
+                    * */
+                }
+            }
+        });
     })
+
     $(".alogin_btn").click(function(){
         rzclose();
     })

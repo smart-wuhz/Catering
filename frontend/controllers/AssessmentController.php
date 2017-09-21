@@ -26,7 +26,6 @@ class AssessmentController extends Controller
             'common' => $this->getCommonData(),   //公共页面数据
             'shoplist' => $this->getShopList()    //店铺列表
         ];
-
         //获取默认店铺数据，存入session
         $this->setDefaultShop();
         $view = Yii::$app->view->params = static::$common;

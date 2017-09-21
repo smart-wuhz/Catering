@@ -54,7 +54,7 @@ use yii\helpers\Html;
                 <b class="xf_clean">&nbsp;</b>
             </div>
             <ul class="his_ul"></ul>
-            <a class="xf_shbtn">测评打分</a>
+            <a href="javascript:void(0)" class="xf_shbtn">测评打分</a>
         </div>
 
         <!--新修搜索框-->
@@ -110,11 +110,15 @@ use yii\helpers\Html;
         })
 
         // 选择店铺 或者地址
-        selectShop();
+        var restaurantName;
+        $(".xf_search ul").on("click", "li", function () {
+            restaurantName = $(this).find('a').html();
+            $("input[name='name']").val(restaurantName);
+        });
 
         //js 提交表单
         $(".xf_shbtn").on('click',function () {
-           $("#siteForm").submit();
+            $("#siteForm").submit();
         });
 
         $(".nsh_btn").on('click',function () {
@@ -145,14 +149,6 @@ use yii\helpers\Html;
                     alert(result.msg);
                 }
             }
-        });
-    }
-
-    //选择店铺 或者地址
-    function selectShop() {
-        $(".xf_search ul").on("click", "li", function () {
-            var name = $(this).find('a').html();
-            $("input[name='name']").val(name);
         });
     }
 </script>
