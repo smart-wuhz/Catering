@@ -74,8 +74,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <!--头部导航-->
         <div class="nav_hd">
-            <a href="#" class="nav_btn"><img src="/images/nav_btn.png"></a>
-            <a href="<?=Url::toRoute(['/'])?>" class="idx"><img src="/images/idx.png"></a>
+            <a href="javascript:void(0)" class="nav_btn"><img src="/images/nav_btn.png"></a>
+            <a href="/" class="idx"><img src="/images/idx.png"></a>
         </div>
 
         <!--个人中心-->

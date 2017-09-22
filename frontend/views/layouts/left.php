@@ -87,7 +87,7 @@ use \yii\helpers\Url;
         </span>
     </div>
     <div class="nl_list">
-        <a href="<?=Url::toRoute(['site/index'])?>" class="nla_a nal_select">首页</a>
+        <a href="/" class="nla_a nal_select">首页</a>
         <a href="<?=Url::toRoute(['fastreport/index'])?>" class="nla_b">HDE分析</a>
         <a href="<?=Url::toRoute(['check/index'])?>" class="nla_c">我的测评</a>
         <a href="<?=Url::toRoute(['shop/index'])?>" class="nla_d">我的商铺</a>

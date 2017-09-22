@@ -28,27 +28,17 @@ class ShopController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => [
-                        'get'
-                    ]
+                    'delete' => ['get']
                 ]
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => [
-                    'index',
-                    'create',
-                    'update',
-                    'delete',
-                    'updatedefault'
-                ],
+                'only' => ['index', 'create', 'update', 'delete', 'updatedefault', 'enter'],
                 'rules' => [
                     // 允许认证用户
                     [
                         'allow' => true,
-                        'roles' => [
-                            '@'
-                        ]
+                        'roles' => ['@']
                     ]
                     // 默认禁止其他用户
                 ]
@@ -66,7 +56,7 @@ class ShopController extends Controller
         return $this->render('index', [
             'dataProvider' => Shop::findAll([
                 'status' => '1',
-                'user_id' => Yii::$app->user->id,
+                'user_id' => Yii::$app->user->identity->id,
             ])
         ]);
     }

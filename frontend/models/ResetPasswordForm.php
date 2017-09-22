@@ -11,12 +11,12 @@ use frontend\models\User;
 class ResetPasswordForm extends Model
 {
     public $password;
+    public $repassword;
 
     /**
      * @var \frontend\models\User
      */
     private $_user;
-
 
     /**
      * Creates a form model given a token.

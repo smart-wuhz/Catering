@@ -30,7 +30,7 @@ $this->title = '消息详情';
         </div>
         <!--头部导航-->
         <div class="nav_hd">
-            <a href="#" class="nav_btn"><img src="/images/nav_btn.png"></a>
+            <a href="javascript:void(0)" class="nav_btn"><img src="/images/nav_btn.png"></a>
             <a href="/" class="idx"><img src="/images/idx.png"></a>
         </div>
 
@@ -59,12 +59,15 @@ $this->title = '消息详情';
     function ajaxDel(shopid) {
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
         var csrfParam = $('meta[name="csrf-param"]').attr("content");
+        var data={};
+        data[csrfParam]=csrfToken;
         if(shopid){
+            data['shopid']=shopid;
             $.ajax({
                 type : 'post',
-                url : '/index.php/message/delete',// 请求的action路径
+                url : "<?=Url::toRoute(['message/delete'])?>",// 请求的action路径
                 dataType:"json",
-                data:"id="+shopid+"&"+csrfParam+"="+csrfToken,
+                data:data,
                 error : function() {// 请求失败处理函数
                 },
                 success:function(result){

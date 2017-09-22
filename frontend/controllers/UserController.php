@@ -141,6 +141,12 @@ class UserController extends Controller
     {
         try {
             $user = new User();
+            /*$user = User::findOne([
+                'status' => 10,
+                'mobile' => '18621051865',
+            ]);
+            $user->generatePasswordResetToken();
+            $user->save();*/
             $token = $user->password_reset_token;
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
