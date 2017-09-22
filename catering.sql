@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-09-18 18:14:18
+Date: 2017-09-22 15:50:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -915,8 +915,8 @@ INSERT INTO `nav` VALUES ('91', '38', '商品属性管理', '/goods/property', n
 DROP TABLE IF EXISTS `shop`;
 CREATE TABLE `shop` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL COMMENT '用户ID',
-  `orgid` varchar(255) NOT NULL COMMENT '店铺机构编号',
+  `user_id` int(11) unsigned DEFAULT '0' COMMENT '用户ID',
+  `orgid` varchar(255) DEFAULT '' COMMENT '店铺机构编号',
   `name` varchar(255) NOT NULL COMMENT '店铺名称',
   `region_id` varchar(255) DEFAULT NULL COMMENT '区域ID 310000,310100,310115',
   `address` varchar(255) NOT NULL COMMENT '地址',
@@ -931,13 +931,14 @@ CREATE TABLE `shop` (
   `created_at` int(11) unsigned DEFAULT NULL COMMENT '创建时间',
   `updated_at` int(11) unsigned DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of shop
 -- ----------------------------
 INSERT INTO `shop` VALUES ('2', '1', 'AAAAAAA', '家之味', '310000,310100,310115', '上海市浦东新区南泉北路1101号', '230', '2', '0', null, null, null, null, '1', null, null);
-INSERT INTO `shop` VALUES ('3', '1', 'AAAAAAA', '爱情海', '310000,310100,310115', '上海市浦东新区浦东南路1101号远东大厦', '231', '1', '1', null, null, null, null, '1', null, null);
+INSERT INTO `shop` VALUES ('3', '1', 'AAAAAAA', '爱情海', '310000,310100,310115', '上海市浦东新区浦东南路1101号远东大厦', '231', '1', '0', null, null, null, null, '1', null, null);
+INSERT INTO `shop` VALUES ('4', '1', 'AAAAAAA', '米其林欢乐餐厅', '310000,310100,310115', '浦东南路1298号', '230', '1', '1', '', '', '', null, '1', null, null);
 
 -- ----------------------------
 -- Table structure for shop_category
@@ -979,7 +980,7 @@ CREATE TABLE `sms_log` (
   `use_time` int(11) DEFAULT '0' COMMENT '使用时间',
   `create_time` int(11) DEFAULT '0' COMMENT '发送时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sms_log
@@ -988,6 +989,7 @@ INSERT INTO `sms_log` VALUES ('9', '18658133898', '888888', 'userRegister', '', 
 INSERT INTO `sms_log` VALUES ('10', '18621051865', '324258', 'verifyCode', '', '', '', '0', '0', '1505698830');
 INSERT INTO `sms_log` VALUES ('11', '18621051865', '753219', 'verifyCode', '', '', '', '0', '0', '1505700937');
 INSERT INTO `sms_log` VALUES ('12', '18621051865', '372735', 'verifyCode', '', '', '', '0', '0', '1505700990');
+INSERT INTO `sms_log` VALUES ('13', '18621051898', '551153', 'userPasswordReset', '', '', '', '0', '0', '1506061355');
 
 -- ----------------------------
 -- Table structure for system_config

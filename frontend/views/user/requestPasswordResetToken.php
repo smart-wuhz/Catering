@@ -4,13 +4,13 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = '找回密码';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <?=Html::csrfMetaTags()?>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/swiper-3.4.2.min.css">
     <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <!--内容模板-->
         <div class="input_box in_psd tel_box">
-            <div class="lp_title">
+            <div class="lp_title" style="display: none">
                 <span>我们已经发送校验码到您的手机：</span>
                 <span>183xxxx5620</span>
             </div>
@@ -46,8 +46,6 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
             <div class="ib_full yzm_box">
-                <?= $form->field($model, 'mobile')->hiddenInput(['value'=>'18658133898'])->label(false);?>
-
                 <input type="text" id="passwordresetrequestform-verifycode" class="form-control" name="PasswordResetRequestForm[verifyCode]" placeholder="请输入验证码">
                 <?=Html::buttonInput('获取验证码', ['class' => 'yzm_btn yb_ck', 'name' => 'send-button', 'id' => 'sendCode']) ?>
             </div>
@@ -56,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <!--深度报告按钮-->
-        <a href="./bg_all.html" class="sd_btn"><span>店铺深度报告</span></a>
+        <a href="<?=Url::toRoute(['fastreport/index'])?>" class="sd_btn"><span>店铺深度报告</span></a>
 
     </div>
 </div>
@@ -80,16 +78,23 @@ $this->params['breadcrumbs'][] = $this->title;
             }
             setTimeout(function() {
                     settime(obj) }
-                ,1000)
+            ,1000);
         }
 
+        //获取验证码
         $(".yzm_btn").click(function(){
-            var url="<?=Url::toRoute(['sms/create'])?>";
-            var csrfToken = "<?=Yii::$app->request->csrfToken?>";
-            var mobile=$("#signupform-mobile").val();
-            var queryParam={mobile:mobile,usage:"userPasswordReset",_csrf:csrfToken};
-            doPostBack(url,queryParam);
-            settime(this);
+            var mobile = $("#passwordresetrequestform-mobile").val();
+            if (isPhoneNum(mobile)) {
+                var queryParam = {mobile: mobile, usage: "userPasswordReset"};
+                var csrfToken = $('meta[name="csrf-token"]').attr("content");
+                var csrfParam = $('meta[name="csrf-param"]').attr("content");
+                queryParam[csrfParam] = csrfToken;
+                var url = "<?=Url::toRoute(['sms/create'])?>";
+                doPostBack(url, queryParam);
+                settime(this);
+            } else {
+                alert('请输入正确的手机号码');
+            }
         })
 
         //提交发送短信
@@ -97,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $.ajax({
                 async : false,
                 cache : false,
-                type : 'GET',
+                type : 'post',
                 url : url,// 请求的action路径
                 dataType:"json",
                 data:queryParam,
@@ -117,12 +122,9 @@ $this->params['breadcrumbs'][] = $this->title;
         }
 
         //校验手机号是否合法
-        function isPhoneNum(){
-            var phonenum = $("#loginform-mobile").val();
+        function isPhoneNum(phonenum){
             var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             if(!myreg.test(phonenum)){
-                alert('请输入有效的手机号码！');
-                $("#loginform-mobile").focus();
                 return false;
             }else{
                 return true;

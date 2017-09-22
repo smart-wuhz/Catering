@@ -88,7 +88,7 @@ class UserController extends Controller
             return $this->render('login', [
                 'model' => $model,
                 'signup' => $signup,
-                'type' =>Yii::$app->request->get('type')
+                'type' => Yii::$app->request->get('type')
             ]);
         }
     }
@@ -119,17 +119,12 @@ class UserController extends Controller
     {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            return $this->redirect(['user/reset-password']);
-            
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-
-                return $this->goHome();
+            if ($model->sendVerifyCode()) {
+                return $this->redirect(['user/reset-password']);
             } else {
                 Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
             }
         }
-
         return $this->render('requestPasswordResetToken', [
             'model' => $model,
         ]);
@@ -142,12 +137,11 @@ class UserController extends Controller
      * @return mixed
      * @throws BadRequestHttpException
      */
-    //public function actionResetPassword($token)
     public function actionResetPassword()
     {
         try {
-            $user=new User();
-            $token =$user->password_reset_token;
+            $user = new User();
+            $token = $user->password_reset_token;
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
             throw new BadRequestHttpException($e->getMessage());
@@ -155,7 +149,6 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
             Yii::$app->session->setFlash('success', 'New password was saved.');
-
             return $this->goHome();
         }
 

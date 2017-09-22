@@ -78,8 +78,14 @@ class Shop extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
+                if (isset(Yii::$app->user->identity->id) && !empty(Yii::$app->user->identity->id)) {
+                    $uid = Yii::$app->user->identity->id;
+                } else {
+                    $uid = 0;
+                }
+
                 $this->orgid = 'AAAAAAA';
-                $this->user_id = Yii::$app->user->id;
+                $this->user_id = $uid;
                 $this->default = '0';
                 $this->business_license = '';
                 $this->legalperson = '';

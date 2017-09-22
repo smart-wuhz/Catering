@@ -55,10 +55,6 @@ class PasswordResetRequestForm extends Model
                 return false;
             }
         }
-
-        /*
-         *  Todo 发送验证码
-         * */
         $sms=new Sms(['mobile'=>$this->mobile,'usage'=>self::VERCODE_USAGE]);
         return $sms->send();
     }

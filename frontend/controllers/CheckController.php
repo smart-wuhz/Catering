@@ -131,17 +131,16 @@ class CheckController extends UcenterController
     public function actionReportClaim()
     {
         if(Yii::$app->request->isAjax){
-            if(isset(Yii::$app->user->identity->id) && !empty(Yii::$app->user->identity->id) ){
-                $uid =Yii::$app->user->identity->id;
-                /*
-                 * todo 认领报告
-                 * */
-
-            }else{
-                $reslut=['status' => 1, 'msg' => 'Error'];
+            if (isset(Yii::$app->user->identity->id) && !empty(Yii::$app->user->identity->id)) {
+                $orgID = Yii::$app->request->post('orgid');
+                $model = Shop::find(['orgid' => $orgID]);
+                $model->user_id = Yii::$app->user->identity->id;
+                $result= $model->save() ? ['err' => 0, 'msg' => 'OK'] : ['err' => 1, 'msg' => 'Error'];
+            } else {
+                $result = ['err' => 1, 'msg' => '请先登录'];
             }
             Yii::$app->response->format = Response::FORMAT_JSON;
-            Yii::$app->response->data = $res;
+            Yii::$app->response->data = $result;
             Yii::$app->response->send();
         }
     }

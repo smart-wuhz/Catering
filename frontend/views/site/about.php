@@ -1,11 +1,13 @@
 <?php
 use yii\helpers\Url;
+use yii\helpers\Html;
 ?>
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <?=Html::csrfMetaTags()?>
     <link rel="stylesheet" href="/css/style.css">
     <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
     <title>关于我们</title>
@@ -23,8 +25,8 @@ use yii\helpers\Url;
         </div>
         <!--头部导航-->
         <div class="nav_hd">
-            <a href="#" class="nav_btn"><img src="/images/nav_btn.png"></a>
-            <a href="/" class="idx"><img src="/images/idx.png"></a>
+            <a href="javascript:void(0)" class="nav_btn"><img src="/images/nav_btn.png"></a>
+            <a href="<?=Url::toRoute(['/'])?>" class="idx"><img src="/images/idx.png"></a>
         </div>
 
         <!--关于我们-->

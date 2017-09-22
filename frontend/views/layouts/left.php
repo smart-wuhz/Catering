@@ -2,9 +2,8 @@
 use \yii\helpers\Url;
 ?>
 <!--弹窗-->
-<div class="alert_mask" style="display: none;">
-    &nbsp;
-</div>
+<div class="alert_mask" style="display: none;"></div>
+
 <!--切换店铺弹窗-->
 <div class="alert_body" style="display: none;">
     <ul>
@@ -17,34 +16,33 @@ use \yii\helpers\Url;
         <?php endforeach; };?>
     </ul>
     <div class="al_btn">
-        <a href="#" class="al_false">取消</a>
-        <a href="#" class="al_false ensure">确定</a>
+        <a href="javascript:void(0)" class="al_false cancel">取消</a>
+        <a href="javascript:void(0)" class="al_false ensure">确定</a>
     </div>
 </div>
 
-<!--未登录弹窗-->
 
-<div class="alert_login" style="display: none;">
+<!--未登录弹窗-->
+<div class="alert_login no-login" style="display: none;">
     <div class="al_img"><img src="/images/lg_ar.png"></div>
     <div class="alg_body">
         <div class="conform">您还未登录，请先去登录</div>
         <div class="conform no_add">亲，你还没添加店铺，赶快去添加吧</div>
-        <div href="#" class="alogin_btn">
-            <a href="#" class="al_cof">取消</a>
-            <a href="#" class="al_cof">确定</a>
+        <div href="javascript:void(0)" class="alogin_btn">
+            <a href="javascript:void(0)" class="al_cof cancel">取消</a>
+            <a href="javascript:void(0)" class="al_cof ensure">确定</a>
         </div>
     </div>
 </div>
 
 <!--认证弹窗-->
-
 <div class="alert_login rz_alert" style="display: none;">
     <div class="al_img"><img src="/images/rz_ar.png"></div>
     <div class="alg_body">
         <div class="conform">认证成功，请到<a href="<?=Url::toRoute(['shop/index'])?>">我的报告</a>查看</div>
-        <div href="#" class="alogin_btn">
-            <a href="#" class="al_cof">取消</a>
-            <a href="#" class="al_cof">确定</a>
+        <div href="javascript:void(0)" class="alogin_btn">
+            <a href="javascript:void(0)" class="al_cof cancel">取消</a>
+            <a href="javascript:void(0)" class="al_cof ensure">确定</a>
         </div>
     </div>
 </div>
@@ -55,8 +53,8 @@ use \yii\helpers\Url;
     <div class="alg_body">
         <div class="conform">切换店铺失败，请重新切换</div>
         <div href="#" class="alogin_btn">
-            <a href="#" class="al_cof">取消</a>
-            <a href="#" class="al_cof">确定</a>
+            <a href="#" class="al_cof cancel">取消</a>
+            <a href="#" class="al_cof ensure">确定</a>
         </div>
     </div>
 </div>
